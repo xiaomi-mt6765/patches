@@ -1,0 +1,17 @@
+diff --git a/services/core/java/com/android/server/audio/AudioService.java b/services/core/java/com/android/server/audio/AudioService.java
+index b607c4ca..ee237ea8 100644
+--- a/services/core/java/com/android/server/audio/AudioService.java
++++ b/services/core/java/com/android/server/audio/AudioService.java
+@@ -741,6 +741,12 @@ public class AudioService extends IAudioService.Stub
+                         MAX_STREAM_VOLUME[AudioSystem.STREAM_SYSTEM];
+         }
+
++        int maxRingNotificationVolume = SystemProperties.getInt("ro.config.ring_notification_vol_steps", -1);
++        if (maxRingNotificationVolume != -1) {
++            MAX_STREAM_VOLUME[AudioSystem.STREAM_RING] = maxRingNotificationVolume;
++            MAX_STREAM_VOLUME[AudioSystem.STREAM_NOTIFICATION] = maxRingNotificationVolume;
++        }
++
+         sSoundEffectVolumeDb = context.getResources().getInteger(
+                 com.android.internal.R.integer.config_soundEffectVolumeDb);
+
